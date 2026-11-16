@@ -1,5 +1,14 @@
-from django.http import HttpResponse
+from django.shortcuts import render
+
+from .models import Event
 
 
 def event_list(request):
-    return HttpResponse("Listado de eventos de EventLen")
+    events = Event.objects.filter(active=True).order_by("date", "time")
+
+    return render(
+        request,
+        "events/event_list.html",
+        {"events": events},
+    )
+    

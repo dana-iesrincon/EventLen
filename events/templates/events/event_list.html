@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eventos | EventLen</title>
+</head>
+<body>
+
+    <h1>Eventos disponibles</h1>
+
+    {% for event in events %}
+        <article>
+            <h2>{{ event.title }}</h2>
+
+            <p>{{ event.description }}</p>
+
+            <p>
+                <strong>Categoría:</strong>
+                {{ event.get_category_display }}
+            </p>
+
+            <p>
+                <strong>Fecha:</strong>
+                {{ event.date|date:"d/m/Y" }}
+            </p>
+
+            <p>
+                <strong>Hora:</strong>
+                {{ event.time|time:"H:i" }}
+            </p>
+
+            <p>
+                <strong>Ubicación:</strong>
+                {{ event.location }}
+            </p>
+
+            <p>
+                <strong>Capacidad:</strong>
+                {{ event.capacity }} personas
+            </p>
+
+            {% if event.minimum_age %}
+                <p>
+                    <strong>Edad mínima:</strong>
+                    {{ event.minimum_age }} años
+                </p>
+            {% endif %}
+        </article>
+
+        <hr>
+    {% empty %}
+        <p>No hay eventos disponibles actualmente.</p>
+    {% endfor %}
+
+</body>
+</html>
