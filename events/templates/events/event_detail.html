@@ -49,11 +49,19 @@
         </p>
 
         {% if event.minimum_age %}
-            <p>
-                <strong>Edad mínima:</strong>
-                {{ event.minimum_age }} años
-            </p>
+        <p>
+            <strong>Edad mínima:</strong>
+            {{ event.minimum_age }} años
+        </p>
         {% endif %}
+
+        <form method="post" action="{% url 'reservations:reserve_event' event.id %}">
+            {% csrf_token %}
+
+            <button type="submit" class="btn btn-success">
+                Reservar plaza
+            </button>
+        </form>
 
     </div>
 </div>
