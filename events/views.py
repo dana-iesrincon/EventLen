@@ -20,8 +20,24 @@ def event_detail(request, event_id):
         active=True,
     )
 
+    active_reservations = event.reservations.filter(active=True).count()
+
+    available_places = event.capacity - active_reservations
+
+    user_has_reservation = False
+
+    if request.user.is_authenticated:
+        user_has_reservation = event.reservations.filter(
+            user=request.user,
+            active=True,
+        ).exists()
+
     return render(
         request,
         "events/event_detail.html",
-        {"event": event},
+        {
+            "event": event,
+            "available_places": available_places,
+            "user_has_reservation": user_has_reservation,
+        },
     )

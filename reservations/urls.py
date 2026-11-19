@@ -10,4 +10,9 @@ urlpatterns = [
         views.reserve_event,
         name="reserve_event",
     ),
+    path(
+        "event/<int:event_id>/cancel/",
+        views.cancel_reservation,
+        name="cancel_reservation",
+    ),
 ]

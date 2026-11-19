@@ -53,3 +53,34 @@ def reserve_event(request, event_id):
     )
 
     return redirect("event_detail", event_id=event.id)
+
+@login_required(login_url="/admin/login/")
+@require_POST
+def cancel_reservation(request, event_id):
+    event = get_object_or_404(
+        Event,
+        id=event_id,
+        active=True,
+    )
+
+    reservation = Reservation.objects.filter(
+        user=request.user,
+        event=event,
+        active=True,
+    ).first()
+
+    if reservation:
+        reservation.active = False
+        reservation.save()
+
+        messages.success(
+            request,
+            "La reserva se ha cancelado correctamente.",
+        )
+    else:
+        messages.info(
+            request,
+            "No tienes una reserva activa para este evento.",
+        )
+
+    return redirect("event_detail", event_id=event.id)
