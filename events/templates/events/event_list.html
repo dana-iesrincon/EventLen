@@ -1,57 +1,75 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Eventos | EventLen</title>
-</head>
-<body>
+{% extends "base.html" %}
 
-    <h1>Eventos disponibles</h1>
+{% block title %}
+Eventos | EventLen
+{% endblock %}
+
+{% block content %}
+
+<h1 class="mb-4">Eventos disponibles</h1>
+
+<div class="row g-4">
 
     {% for event in events %}
-        <article>
-            <h2>{{ event.title }}</h2>
 
-            <p>{{ event.description }}</p>
+        <div class="col-md-6 col-lg-4">
+            <div class="card h-100">
 
-            <p>
-                <strong>Categoría:</strong>
-                {{ event.get_category_display }}
-            </p>
+                <div class="card-body">
 
-            <p>
-                <strong>Fecha:</strong>
-                {{ event.date|date:"d/m/Y" }}
-            </p>
+                    <h2 class="card-title h4">
+                        {{ event.title }}
+                    </h2>
 
-            <p>
-                <strong>Hora:</strong>
-                {{ event.time|time:"H:i" }}
-            </p>
+                    <p class="card-text">
+                        {{ event.description }}
+                    </p>
 
-            <p>
-                <strong>Ubicación:</strong>
-                {{ event.location }}
-            </p>
+                    <p>
+                        <strong>Categoría:</strong>
+                        {{ event.get_category_display }}
+                    </p>
 
-            <p>
-                <strong>Capacidad:</strong>
-                {{ event.capacity }} personas
-            </p>
+                    <p>
+                        <strong>Fecha:</strong>
+                        {{ event.date|date:"d/m/Y" }}
+                    </p>
 
-            {% if event.minimum_age %}
-                <p>
-                    <strong>Edad mínima:</strong>
-                    {{ event.minimum_age }} años
-                </p>
-            {% endif %}
-        </article>
+                    <p>
+                        <strong>Hora:</strong>
+                        {{ event.time|time:"H:i" }}
+                    </p>
 
-        <hr>
+                    <p>
+                        <strong>Ubicación:</strong>
+                        {{ event.location }}
+                    </p>
+
+                    <p>
+                        <strong>Capacidad:</strong>
+                        {{ event.capacity }} personas
+                    </p>
+
+                    {% if event.minimum_age %}
+                        <p>
+                            <strong>Edad mínima:</strong>
+                            {{ event.minimum_age }} años
+                        </p>
+                    {% endif %}
+
+                </div>
+
+            </div>
+        </div>
+
     {% empty %}
-        <p>No hay eventos disponibles actualmente.</p>
+
+        <div class="col">
+            <p>No hay eventos disponibles actualmente.</p>
+        </div>
+
     {% endfor %}
 
-</body>
-</html>
+</div>
+
+{% endblock %}
