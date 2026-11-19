@@ -1,6 +1,6 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import get_object_or_404, redirect
+from django.shortcuts import get_object_or_404, redirect, render
 from django.views.decorators.http import require_POST
 
 from events.models import Event
@@ -84,3 +84,16 @@ def cancel_reservation(request, event_id):
         )
 
     return redirect("event_detail", event_id=event.id)
+
+@login_required(login_url="/admin/login/")
+def reservation_list(request):
+    reservations = Reservation.objects.filter(
+        user=request.user,
+        active=True,
+    ).select_related("event").order_by("event__date", "event__time")
+
+    return render(
+        request,
+        "reservations/reservation_list.html",
+        {"reservations": reservations},
+    )
