@@ -8,7 +8,7 @@ from events.models import Event
 from .models import Reservation
 
 
-@login_required(login_url="/admin/login/")
+@login_required
 @require_POST
 def reserve_event(request, event_id):
     event = get_object_or_404(
